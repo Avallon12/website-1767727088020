@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services & Pricing - Stellar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <style>
+    :root {
+      --primary: #6366F1; /* Indigo */
+      --secondary: #EC4899; /* Pink */
+      --dark: #1F2937; /* Cool Gray 800 */
+      --light: #F9FAFB; /* Cool Gray 50 */
+    }
+    body { font-family: 'Inter', sans-serif; background-color: var(--light); color: var(--dark); }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; letter-spacing: -0.025em; }
+    .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #a855f7 100%);
+      color: white; padding: 14px 28px; border-radius: 9999px; font-weight: 600;
+      transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    .btn-primary:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4); }
+    .stripe-checkout-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
+        transition: all 0.3s; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        width: 100%; text-align: center;
+    }
+    .stripe-checkout-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5); }
+    .stripe-checkout-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+    .nav-link { position: relative; padding-bottom: 4px; transition: color 0.3s; }
+    .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s ease; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: var(--primary); font-weight: 600; }
+    .nav-link.active::after { width: 100%; }
+    .glass-nav { backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.8); }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .faq-item summary { cursor: pointer; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item[open] summary .icon { transform: rotate(45deg); }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- NAVIGATION -->
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <nav class="glass-nav border-b border-gray-200/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <a href="index.html" class="text-3xl font-extrabold">
+            <span class="gradient-text">Stellar</span>
+          </a>
+          <div class="hidden md:flex items-center space-x-10">
+            <a href="index.html" class="nav-link text-gray-600 hover:text-gray-900">Home</a>
+            <a href="about.html" class="nav-link text-gray-600 hover:text-gray-900">About Us</a>
+            <a href="services.html" class="nav-link active">Services</a>
+            <a href="contact.html" class="nav-link text-gray-600 hover:text-gray-900">Contact</a>
+          </div>
+          <div class="hidden md:block">
+            <a href="services.html" class="btn-primary">Get Started</a>
+          </div>
+          <button class="md:hidden text-gray-600"><i class="fas fa-bars text-2xl"></i></button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- PRICING HERO -->
+    <section class="pt-40 pb-20 lg:pt-48 lg:pb-28 text-center bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 leading-tight mb-6 reveal">Simple, Transparent Pricing</h1>
+        <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10 reveal" style="transition-delay: 100ms;">Choose the perfect plan to launch and grow your business. No hidden fees, no surprises. Just powerful tools to help you succeed.</p>
+      </div>
+    </section>
+
+    <!-- PRICING TABLE -->
+    <section id="pricing" class="py-20 md:py-28 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-3 gap-8 items-center">
+          <!-- Basic Plan -->
+          <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-lg reveal">
+            <h3 class="text-2xl font-bold text-gray-900">Starter</h3>
+            <p class="text-gray-500 mt-2 mb-6">Perfect for new businesses.</p>
+            <div class="text-5xl font-extrabold text-gray-900 mb-6">$19<span class="text-lg font-medium text-gray-500">/mo</span></div>
+            <ul class="space-y-4 text-gray-600 mb-8">
+              <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3"></i>Beautiful Storefront</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3"></i>Up to 100 products</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3"></i>Secure Checkout</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3"></i>Basic Analytics</li>
+            </ul>
+            <a href="contact.html" class="w-full text-center bg-indigo-100 text-indigo-700 font-semibold py-3 px-6 rounded-lg hover:bg-indigo-200 transition-colors">Choose Plan</a>
+          </div>
+
+          <!-- Pro Plan (POPULAR) -->
+          <div class="bg-gray-900 text-white p-10 rounded-3xl shadow-2xl relative transform lg:scale-110 reveal" style="transition-delay: 150ms;">
+            <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm font-semibold rounded-full">MOST POPULAR</div>
+            <h3 class="text-3xl font-bold">Pro</h3>
+            <p class="text-gray-300 mt-2 mb-6">For growing businesses ready to scale.</p>
+            <div class="text-6xl font-extrabold mb-6">$29<span class="text-xl font-medium text-gray-400">/mo</span></div>
+            <ul class="space-y-4 text-gray-300 mb-8">
+              <li class="flex items-center"><i class="fas fa-check-circle text-pink-400 mr-3"></i>Everything in Starter, plus:</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-pink-400 mr-3"></i>Unlimited products</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-pink-400 mr-3"></i>Advanced Analytics</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-pink-400 mr-3"></i>Marketing Automations</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-pink-400 mr-3"></i>Priority Support</li>
+            </ul>
+            <button 
+              class="stripe-checkout-btn text-lg" 
+              onclick="handleStripeCheckout.call(this, 'price_1SmG2l0Afn09g23QoCbGETau', 'Stellar Pro Plan', 29)"
+              data-price-id="price_1SmG2l0Afn09g23QoCbGETau"
+              data-original-text="<i class='fas fa-credit-card mr-2'></i>Get Started with Pro - $29">
+              <i class="fas fa-credit-card mr-2"></i>Get Started with Pro
+            </button>
+          </div>
+
+          <!-- Enterprise Plan -->
+          <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-lg reveal" style="transition-delay: 300ms;">
+            <h3 class="text-2xl font-bold text-gray-900">Enterprise</h3>
+            <p class="text-gray-500 mt-2 mb-6">For large-scale operations.</p>
+            <div class="text-5xl font-extrabold text-gray-900 mb-6">Custom</div>
+            <ul class="space-y-4 text-gray-600 mb-8">
+              <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3"></i>Everything in Pro, plus:</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3"></i>Dedicated Account Manager</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3"></i>Custom Integrations</li>
+              <li class="flex items-center"><i class="fas fa-check-circle text-indigo-500 mr-3"></i>Enterprise-grade Security</li>
+            </ul>
+            <a href="contact.html" class="w-full text-center bg-indigo-100 text-indigo-700 font-semibold py-3 px-6 rounded-lg hover:bg-indigo-200 transition-colors">Contact Sales</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-indigo-600 font-semibold uppercase tracking-wider">Our Process</span>
+                <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mt-4">Get Started in 3 Easy Steps</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-10 relative">
+                <!-- Dotted line connector -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 border-t-2 border-dashed border-gray-300 -translate-y-1/2" style="margin-top: -3.5rem;"></div>
+                <div class="text-center relative reveal">
+                    <div class="w-24 h-24 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl font-bold border-4 border-white shadow-md">1</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Choose Your Plan</h3>
+                    <p class="text-gray-600">Select the plan that best fits your business needs and goals.</p>
+                </div>
+                <div class="text-center relative reveal" style="transition-delay: 150ms;">
+                    <div class="w-24 h-24 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl font-bold border-4 border-white shadow-md">2</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Customize Your Store</h3>
+                    <p class="text-gray-600">Use our intuitive builder to design a stunning storefront that reflects your brand.</p>
+                </div>
+                <div class="text-center relative reveal" style="transition-delay: 300ms;">
+                    <div class="w-24 h-24 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl font-bold border-4 border-white shadow-md">3</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Launch & Grow</h3>
+                    <p class="text-gray-600">Go live and start selling! Use our powerful tools to grow your business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 md:py-28 bg-gray-50">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900">Frequently Asked Questions</h2>
+          <p class="text-xl text-gray-600 mt-4">Have questions? We've got answers.</p>
+        </div>
+        <div class="space-y-4">
+          <details class="faq-item bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 reveal">
+            <summary class="flex justify-between items-center font-semibold text-lg text-gray-900">
+              Can I switch plans later?
+              <span class="icon text-indigo-500 text-2xl transition-transform duration-300">&plus;</span>
+            </summary>
+            <p class="text-gray-600 mt-4">Absolutely! You can upgrade, downgrade, or cancel your plan at any time directly from your account dashboard. We believe in flexibility for your growing business.</p>
+          </details>
+          <details class="faq-item bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 reveal" style="transition-delay: 100ms;">
+            <summary class="flex justify-between items-center font-semibold text-lg text-gray-900">
+              Are there any transaction fees?
+              <span class="icon text-indigo-500 text-2xl transition-transform duration-300">&plus;</span>
+            </summary>
+            <p class="text-gray-600 mt-4">Stellar does not charge any transaction fees. You will only be subject to the standard processing fees from our payment partner, Stripe.</p>
+          </details>
+          <details class="faq-item bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 reveal" style="transition-delay: 200ms;">
+            <summary class="flex justify-between items-center font-semibold text-lg text-gray-900">
+              Can I use my own domain name?
+              <span class="icon text-indigo-500 text-2xl transition-transform duration-300">&plus;</span>
+            </summary>
+            <p class="text-gray-600 mt-4">Yes, you can easily connect your own custom domain name to your Stellar store. We also provide a free `yourstore.stellar.com` domain to get you started.</p>
+          </details>
+          <details class="faq-item bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 reveal" style="transition-delay: 300ms;">
+            <summary class="flex justify-between items-center font-semibold text-lg text-gray-900">
+              What kind of support do you offer?
+              <span class="icon text-indigo-500 text-2xl transition-transform duration-300">&plus;</span>
+            </summary>
+            <p class="text-gray-600 mt-4">We offer 24/7 email support for all plans. Our Pro and Enterprise plans include priority support and dedicated account management to ensure you have everything you need to succeed.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div class="col-span-1">
+          <a href="index.html" class="text-3xl font-extrabold mb-4 inline-block">
+            <span class="gradient-text">Stellar</span>
+          </a>
+          <p class="text-gray-400">The ultimate platform for building and scaling your online business.</p>
+          <div class="flex gap-4 mt-6">
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-indigo-500 transition-colors"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-indigo-500 transition-colors"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-indigo-500 transition-colors"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg mb-4">Product</h4>
+          <ul class="space-y-3 text-gray-400">
+            <li><a href="services.html" class="hover:text-white transition">Features</a></li>
+            <li><a href="services.html" class="hover:text-white transition">Pricing</a></li>
+            <li><a href="#" class="hover:text-white transition">Integrations</a></li>
+            <li><a href="#" class="hover:text-white transition">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg mb-4">Company</h4>
+          <ul class="space-y-3 text-gray-400">
+            <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+            <li><a href="#" class="hover:text-white transition">Careers</a></li>
+            <li><a href="#" class="hover:text-white transition">Press</a></li>
+            <li><a href="contact.html" class="hover:text-white transition">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg mb-4">Contact Us</h4>
+          <ul class="space-y-3 text-gray-400">
+            <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3 text-indigo-400"></i>123 Commerce St,<br>San Francisco, CA 94105</li>
+            <li class="flex items-center"><i class="fas fa-envelope mr-3 text-indigo-400"></i>hello@stellar.com</li>
+            <li class="flex items-center"><i class="fas fa-phone mr-3 text-indigo-400"></i>+1 (555) 123-4567</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+        <p>&copy; 2024 Stellar. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const stripe = Stripe('pk_test_51ScwfS0Afn09g23Qy2nzvHVaAYxy4jWxr0NaTTB7PKo5n852Ay4mYmG3dBGlxjV9aVwn3u1kciZamxGxZieaP84T00MwNl1iR4');
+
+    async function handleStripeCheckout(priceId, productName, amount) {
+       let button = null;
+       let originalText = '';
+       try {
+         if (typeof event !== 'undefined' && event && event.target) {
+           button = event.target;
+         } else if (this && this.tagName === 'BUTTON') {
+           button = this;
+         } else {
+           button = document.querySelector('[data-price-id="' + priceId + '"]') || document.querySelector('.stripe-checkout-btn') || document.activeElement;
+         }
+         if (button) {
+           originalText = button.innerHTML;
+           button.disabled = true;
+           button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+         }
+        if (!priceId || typeof priceId !== 'string' || priceId.trim() === '') {
+          throw new Error('Price ID is required. Please configure a valid Stripe Price ID.');
+        }
+        let apiUrl = 'https://beta-avallon1.vercel.app/api/stripe/checkout';
+        try {
+          if (typeof window !== 'undefined' && window.location && window.location.hostname) {
+            const hostname = window.location.hostname;
+            if (hostname === 'localhost' || hostname === '127.0.0.1') {
+              apiUrl = 'http://localhost:3000/api/stripe/checkout';
+            }
+          }
+        } catch (e) {}
+        let successUrl = window.location.href.split('?')[0].split('#')[0] + '?payment=success';
+        let cancelUrl = window.location.href.split('?')[0].split('#')[0] + '?payment=cancelled';
+        try {
+          if (typeof window !== 'undefined' && window.location && window.location.href) {
+            const href = window.location.href;
+            if (href && typeof href === 'string' && href !== 'about:blank' && !href.startsWith('blob:') && href.length > 0) {
+              const baseUrl = href.split('?')[0].split('#')[0];
+              if (baseUrl && baseUrl.length > 0 && baseUrl.startsWith('http')) {
+                successUrl = baseUrl + '?payment=success';
+                cancelUrl = baseUrl + '?payment=cancelled';
+              }
+            }
+          }
+        } catch (e) {}
+        const response = await fetch(apiUrl, {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json', },
+           body: JSON.stringify({
+             priceId: priceId.trim(),
+             successUrl: successUrl,
+             cancelUrl: cancelUrl,
+             metadata: { productName: productName || 'Product', amount: amount || null }
+           })
+         });
+         if (!response.ok) {
+           const errorText = await response.text();
+           let errorData = { error: 'Server error' };
+           try { errorData = JSON.parse(errorText); } catch (e) { errorData = { error: 'Server error: ' + response.status + ' ' + response.statusText }; }
+           throw new Error(errorData.error || 'Failed to create checkout session');
+         }
+         const data = await response.json();
+         if (data.error) { throw new Error(data.error); }
+         if (!data.checkoutUrl) { throw new Error('No checkout URL received from server. Please check your Stripe configuration.'); }
+         if (typeof data.checkoutUrl !== 'string') { throw new Error('Invalid checkout URL format received from server'); }
+         if (!data.checkoutUrl.startsWith('http://') && !data.checkoutUrl.startsWith('https://')) { throw new Error('Checkout URL must be a valid HTTP/HTTPS URL'); }
+         window.location.href = data.checkoutUrl;
+       } catch (error) {
+         console.error('Stripe checkout error:', error);
+         const errorMsg = error.message || 'Payment processing failed. Please try again.';
+         alert('Payment Error: ' + errorMsg);
+         if (button) {
+           button.disabled = false;
+           const restoreText = button.getAttribute('data-original-text') || originalText || '<i class="fas fa-credit-card mr-2"></i>Buy Now';
+           button.innerHTML = restoreText;
+         }
+       }
+     }
+
+    // Scroll reveal animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
