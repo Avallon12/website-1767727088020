@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Stellar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <style>
+    :root {
+      --primary: #6366F1; /* Indigo */
+      --secondary: #EC4899; /* Pink */
+      --dark: #1F2937; /* Cool Gray 800 */
+      --light: #F9FAFB; /* Cool Gray 50 */
+    }
+    body { font-family: 'Inter', sans-serif; background-color: var(--light); color: var(--dark); }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; letter-spacing: -0.025em; }
+    .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #a855f7 100%);
+      color: white; padding: 14px 28px; border-radius: 9999px; font-weight: 600;
+      transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    .btn-primary:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4); }
+    .nav-link { position: relative; padding-bottom: 4px; transition: color 0.3s; }
+    .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s ease; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: var(--primary); font-weight: 600; }
+    .nav-link.active::after { width: 100%; }
+    .glass-nav { backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.8); }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- NAVIGATION -->
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <nav class="glass-nav border-b border-gray-200/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+          <a href="index.html" class="text-3xl font-extrabold">
+            <span class="gradient-text">Stellar</span>
+          </a>
+          <div class="hidden md:flex items-center space-x-10">
+            <a href="index.html" class="nav-link text-gray-600 hover:text-gray-900">Home</a>
+            <a href="about.html" class="nav-link active">About Us</a>
+            <a href="services.html" class="nav-link text-gray-600 hover:text-gray-900">Services</a>
+            <a href="contact.html" class="nav-link text-gray-600 hover:text-gray-900">Contact</a>
+          </div>
+          <div class="hidden md:block">
+            <a href="services.html" class="btn-primary">Get Started</a>
+          </div>
+          <button class="md:hidden text-gray-600"><i class="fas fa-bars text-2xl"></i></button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ABOUT HERO -->
+    <section class="pt-40 pb-20 lg:pt-48 lg:pb-28 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="reveal">
+            <span class="text-indigo-600 font-semibold uppercase tracking-wider">Our Story</span>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mt-4 mb-6">We're on a mission to democratize e-commerce.</h1>
+            <p class="text-xl text-gray-600 leading-relaxed">Stellar was born from a simple idea: that anyone with a great product should be able to build a successful online business. We're a passionate team of developers, designers, and e-commerce experts dedicated to creating tools that are powerful, beautiful, and easy to use.</p>
+          </div>
+          <div class="reveal" style="transition-delay: 150ms;">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1170&auto=format&fit=crop" alt="Team collaborating" class="rounded-2xl shadow-2xl">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSION, VISION, VALUES -->
+    <section class="py-20 md:py-28 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-12 text-center">
+          <div class="reveal">
+            <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-4xl"><i class="fas fa-rocket"></i></div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-3">Our Mission</h3>
+            <p class="text-gray-600">To empower entrepreneurs with the tools and technology to build, manage, and scale thriving online businesses.</p>
+          </div>
+          <div class="reveal" style="transition-delay: 150ms;">
+            <div class="w-20 h-20 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-4xl"><i class="fas fa-eye"></i></div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-3">Our Vision</h3>
+            <p class="text-gray-600">To be the world's most trusted and beloved e-commerce platform, powering the next generation of digital-native brands.</p>
+          </div>
+          <div class="reveal" style="transition-delay: 300ms;">
+            <div class="w-20 h-20 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-4xl"><i class="fas fa-heart"></i></div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-3">Our Values</h3>
+            <p class="text-gray-600">Customer-first, innovation, integrity, simplicity, and a passion for craftsmanship in everything we do.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS COUNTERS -->
+    <section class="py-20 bg-indigo-600 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div class="reveal">
+            <div class="text-5xl font-extrabold">10,000+</div>
+            <div class="text-indigo-200 mt-2 text-lg">Active Stores</div>
+          </div>
+          <div class="reveal" style="transition-delay: 100ms;">
+            <div class="text-5xl font-extrabold">$1B+</div>
+            <div class="text-indigo-200 mt-2 text-lg">Processed Annually</div>
+          </div>
+          <div class="reveal" style="transition-delay: 200ms;">
+            <div class="text-5xl font-extrabold">45</div>
+            <div class="text-indigo-200 mt-2 text-lg">Countries Served</div>
+          </div>
+          <div class="reveal" style="transition-delay: 300ms;">
+            <div class="text-5xl font-extrabold">99.9%</div>
+            <div class="text-indigo-200 mt-2 text-lg">Uptime</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section class="py-20 md:py-28 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 reveal">
+          <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900">Meet the Leadership</h2>
+          <p class="text-xl text-gray-600 mt-4 max-w-2xl mx-auto">The brilliant minds behind Stellar's success.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="text-center reveal">
+            <img class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300&h=300&auto=format&fit=crop" alt="Team member">
+            <h4 class="text-xl font-bold text-gray-900">Michael Chen</h4>
+            <p class="text-indigo-600 font-medium">Co-Founder & CEO</p>
+          </div>
+          <div class="text-center reveal" style="transition-delay: 150ms;">
+            <img class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=300&h=300&auto=format&fit=crop" alt="Team member">
+            <h4 class="text-xl font-bold text-gray-900">Jessica Rodriguez</h4>
+            <p class="text-indigo-600 font-medium">Co-Founder & CTO</p>
+          </div>
+          <div class="text-center reveal" style="transition-delay: 300ms;">
+            <img class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=300&h=300&auto=format&fit=crop" alt="Team member">
+            <h4 class="text-xl font-bold text-gray-900">David Lee</h4>
+            <p class="text-indigo-600 font-medium">Head of Product</p>
+          </div>
+          <div class="text-center reveal" style="transition-delay: 450ms;">
+            <img class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=300&h=300&auto=format&fit=crop" alt="Team member">
+            <h4 class="text-xl font-bold text-gray-900">Sarah Williams</h4>
+            <p class="text-indigo-600 font-medium">Head of Design</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="py-20 md:py-28 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6 reveal">Join Our Team</h2>
+            <p class="text-xl text-gray-600 mb-10 reveal" style="transition-delay: 100ms;">We're always looking for talented individuals to join our mission. If you're passionate about e-commerce and technology, we'd love to hear from you.</p>
+            <a href="contact.html" class="btn-primary text-xl inline-block reveal" style="transition-delay: 200ms;">View Open Positions</a>
+        </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div class="col-span-1">
+          <a href="index.html" class="text-3xl font-extrabold mb-4 inline-block">
+            <span class="gradient-text">Stellar</span>
+          </a>
+          <p class="text-gray-400">The ultimate platform for building and scaling your online business.</p>
+          <div class="flex gap-4 mt-6">
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-indigo-500 transition-colors"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-indigo-500 transition-colors"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-indigo-500 transition-colors"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg mb-4">Product</h4>
+          <ul class="space-y-3 text-gray-400">
+            <li><a href="services.html" class="hover:text-white transition">Features</a></li>
+            <li><a href="services.html" class="hover:text-white transition">Pricing</a></li>
+            <li><a href="#" class="hover:text-white transition">Integrations</a></li>
+            <li><a href="#" class="hover:text-white transition">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg mb-4">Company</h4>
+          <ul class="space-y-3 text-gray-400">
+            <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+            <li><a href="#" class="hover:text-white transition">Careers</a></li>
+            <li><a href="#" class="hover:text-white transition">Press</a></li>
+            <li><a href="contact.html" class="hover:text-white transition">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg mb-4">Contact Us</h4>
+          <ul class="space-y-3 text-gray-400">
+            <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3 text-indigo-400"></i>123 Commerce St,<br>San Francisco, CA 94105</li>
+            <li class="flex items-center"><i class="fas fa-envelope mr-3 text-indigo-400"></i>hello@stellar.com</li>
+            <li class="flex items-center"><i class="fas fa-phone mr-3 text-indigo-400"></i>+1 (555) 123-4567</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
+        <p>&copy; 2024 Stellar. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const stripe = Stripe('pk_test_51ScwfS0Afn09g23Qy2nzvHVaAYxy4jWxr0NaTTB7PKo5n852Ay4mYmG3dBGlxjV9aVwn3u1kciZamxGxZieaP84T00MwNl1iR4');
+    
+    // Scroll reveal animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
